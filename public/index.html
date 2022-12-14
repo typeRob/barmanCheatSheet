@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Document</title>
+</head>
+
+<body onload="search()">
+    <div class="topnav">
+        <h1 id="title">The Barman CheatSheet</h1>
+        <a class="active" href="#page">Home</a>
+        <a href="https://www.thecocktaildb.com">About</a>
+        <select name="countries" id="langSelect" onchange="changeLang(this.value)">
+            <option value=null selected>Select Language</option>
+            <option value="EN">🇬🇧&emsp;English</option>
+            <option value="DE">🇩🇪&emsp;Deutsch</option>
+            <option value="IT">🇮🇹&emsp;Italiano</option>
+        </select>
+        <select name="searchParams" id="searchParams" required onload="search()" onchange="search()">
+            <option value="cocktail">Cocktails</option>
+            <option value="ingredient">Ingredients</option>
+        </select>
+        <input type="text" id="searchBox" onkeyup="search()" placeholder="Search...">
+    </div>
+    <div class="page">
+ 
+    </div>
+    <div class="centered">
+        <section class="cards" id="cards">
+        </section>
+    </div>
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <div id="modalText"></div>
+        </div>
+      
+      </div>
+      
+    <script src="assets/js/script.js"></script>
+</body>
+
+</html>
