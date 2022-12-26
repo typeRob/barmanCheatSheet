@@ -11,12 +11,9 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 
-
-
 app.post('/getResult', async(req, res)=>{
-    var payload=req.body.payload
+    let payload=req.body.payload
     const fetchApi=await fetch('https://www.thecocktaildb.com/api/json/v1/1/'+payload)
     const result=await fetchApi.json()
     res.json(result)
 })
-
