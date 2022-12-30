@@ -1,4 +1,4 @@
-/* For mobile phones: */
+/* mobile */
 [class*="col-"] {
   margin-left: auto;
   margin-right: auto;
@@ -8,7 +8,7 @@
   width: 100%;
 }
 @media only screen and (min-width: 768px) {
-  /* For tablets: */
+  /* tablets: */
   .col-s-1 {width: 8.33%;}
   .col-s-2 {width: 16.66%;}
   .col-s-3 {width: 25%;}
@@ -24,7 +24,7 @@
 }
 
 @media only screen and (min-width: 1024px) {
-  /* For desktop: */
+  /* desktop: */
   .col-1 {width: 8.33%;}
   .col-2 {width: 16.66%;}
   .col-3 {width: 25%;}
@@ -54,7 +54,7 @@ body {
   margin: 0;
   padding: 0;
 }
-/* Add a background color to the top navigation bar */
+/* sfondo barra superiore */
 .topnav {
   overflow: hidden;
   background-color: #e9e9e9;
@@ -72,7 +72,7 @@ body {
   color: black;
 }
 
-/* Style the links inside the navigation bar */
+/* stile dei link nella navbar */
 .topnav a {
   float: left;
   display: block;
@@ -83,19 +83,19 @@ body {
   font-size: 17px;
 }
 
-/* Change the color of links on hover */
+/* colore dei link quando ci passo sopra con il mouse */
 .topnav a:hover {
   background-color: #ddd;
   color: black;
 }
 
-/* Style the "active" element to highlight the current page */
+/* colore identificativo per il link della home */
 .topnav a.active {
   background-color: #7099a0;
   color: white;
 }
 
-/* Style the search box inside the navigation bar */
+/* barra di ricerca */
 .topnav input[type=text] {
   float: right;
   padding: 6px;
@@ -156,7 +156,7 @@ body {
 .card button:hover {
   opacity: 0.7;
 }
-/*MODAL BOX*/
+/*MODAL*/
 .modal {
   display: none;
   /* Hidden by default */
@@ -180,7 +180,7 @@ body {
   /* Black w/ opacity */
 }
 
-/* Modal Content */
+/*  contenuto modal */
 .modal-content {
   background-color: #fefefe;
   margin: auto;
@@ -189,7 +189,7 @@ body {
   width: 80%;
 }
 
-/* The Close Button */
+/* x */
 .close {
   color: #aaaaaa;
   float: right;
@@ -203,7 +203,7 @@ body {
   text-decoration: none;
   cursor: pointer;
 }
-
+/*select di lingua e tipo*/
 select {
   height: 50px;
   line-height: 50px;

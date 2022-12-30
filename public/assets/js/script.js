@@ -13,7 +13,8 @@ const prep = []
 
 function setLang(){
     //Effettuo un controllo per vedere se nel Localstorage vi è già salvata una impostazione di linguaggio,
-    // in modo che se la pagina venisse ricaricata resta salvata l'impostazione, altrimenti verrà impostato il linguaggio rilevato dal OS.
+    // in modo che se la pagina venisse ricaricata resta salvata l'impostazione, 
+    //altrimenti verrà impostato il linguaggio rilevato dal OS.
     var key=localStorage.getItem('language')
     if(!key){
         var navlang=navigator.language
@@ -29,11 +30,13 @@ function setLang(){
 }
 
 function cleanResults(res) {
+    //pulizia del div con i drink ottenuti dall'API
     section.innerHTML = ""
     clearStorage()
 }
 
 function clearStorage() {
+    //pulizia dello storage, lasciando la lingua selezionata per mantenere l'UI integra
     for (var key in localStorage) {
         if (key != "language")
             localStorage.removeItem(key)
@@ -41,36 +44,46 @@ function clearStorage() {
 }
 
 function search() {
+    //ricerca di drink/ingredienti tramite l'API via nodejs, parametri passati tramite AJAX per una
+    //ricerca asincrona e ottenuti in JSON
     var xhttp = new XMLHttpRequest()
     xhttp.open(`POST`, `/getResult`, true)
     xhttp.setRequestHeader(`Content-Type`, `application/json; charset=UTF-8`)
     var e = document.getElementById("searchBox")
     var param = document.getElementById("searchParams")
     clearStorage()
-    /*INPUT CHECK -  IF IS A SINGLE CHAR, A STRING OR AN INGREDIENT*/
-    //if radio.cocktail is checked
+    /*CONTROLLO INPUT E PULIZIA, se un solo char o più di uno*/
+    //controllo se è selezionato cocktail o ingredient
     if (param.value == "cocktail") {
-        //if has 1 char -> ?f=
+        //se ha 1 char -> ?f=
         if (e.value.length == 1) {
             cleanResults()
             var strpayload = "search.php?f=" + e.value
         }
-        //else if has 2 or more char -> ?s=
-        //i leave it without specifying 2 or more since the api if asked empty it returns some default drinks
+        //se ha 2 o più char -> ?s=
+        //l'api gestisce automaticamente la ricerca non completa delle parole, quindi specifico semplicemente
+        //se ne ha più di uno
         else if (e.value.length > 1) {
             cleanResults()
             var strpayload = "search.php?s=" + e.value
         }
+        //se la barra di ricerca è vuota(quindi anche al caricamento della pagina) stampo a video un cocktail random
         else {
             cleanResults()
+            var h2=document.getElementById('randomH2')
+            if(localStorage.getItem('language')=='it')
+                h2.textContent="Cocktail consigliato:"
+            else if(localStorage.getItem('language')=='de')
+                h2.textContent="Empfohlener cocktail:"
+            else
+                h2.textContent="Suggested cocktail:"
             var strpayload = "random.php"
         }
-        //else if radio.ingredients is checked
-        //-> ?i=
+        //se è checkato ingredient -> ?i=
     }
     else if (param.value == "ingredient") {
         if (e.value.length > 0) {
-            //the api if asked empty it returns a default ingredient
+            //se l'api non riceve input torna un ingrediente di default
             cleanResults()
             var strpayload = "search.php?i=" + e.value
         }
@@ -83,11 +96,10 @@ function search() {
         JSON.stringify({ payload: strpayload })
     )
     xhttp.onload = function (e) {
-        // Check if the request was a success
         if (xhttp.readyState === 4 && xhttp.status === 200) {
             var response = xhttp.responseText;
             var json = JSON.parse(response);
-            //print a card for each result
+            //stampo una card per ogni cocktail
             if (json.drinks) {
                 cleanResults()
                 json.drinks.forEach(drink => {
@@ -172,7 +184,7 @@ function search() {
     }
 }
 function showInstructions(res) {
-    //FORMAT PREP
+    //formattazione istruzioni
     var prep = localStorage.getItem(res)
     var arr = JSON.parse(prep)
     var message = `<h1>Preparation</h1>
@@ -189,7 +201,7 @@ function showInstructions(res) {
     span.onclick = function () {
         modal.style.display = "none";
     }
-    // When the user clicks anywhere outside of the modal, close it
+    // chiude il modal quando l'utente clicca al di fuori della sua area
     window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = "none";
