@@ -9,22 +9,22 @@
     <title>Document</title>
 </head>
 
-<body onload="search()">
+<body onload="search(); setLang()">
     <div class="topnav">
         <h1 id="title">The Barman CheatSheet</h1>
-        <a class="active" href="#page">Home</a>
-        <a href="https://www.thecocktaildb.com">About</a>
-        <select name="countries" id="langSelect" onchange="changeLang(this.value)">
-            <option value=null selected>Select Language</option>
-            <option value="EN">🇬🇧&emsp;English</option>
-            <option value="DE">🇩🇪&emsp;Deutsch</option>
-            <option value="IT">🇮🇹&emsp;Italiano</option>
+        <a class="active col-1 col-s-1 btn" href="#page" onclick="location.reload()">Home</a>
+        <a class="col-1 col-s-1 btn" href="https://www.thecocktaildb.com">API</a>
+        <select class="col-1 col-s-2" name="countries" id="langSelect">
+            <option value=null selected>Language</option>
+            <option value="en">🇬🇧&emsp;English</option>
+            <option value="de">🇩🇪&emsp;Deutsch</option>
+            <option value="it">🇮🇹&emsp;Italiano</option>
         </select>
-        <select name="searchParams" id="searchParams" required onload="search()" onchange="search()">
+        <select class="col-1 col-s-2" name="searchParams" id="searchParams" required onload="search()" onchange="search()">
             <option value="cocktail">Cocktails</option>
             <option value="ingredient">Ingredients</option>
         </select>
-        <input type="text" id="searchBox" onkeyup="search()" placeholder="Search...">
+        <input class="col-4 col-s-4" type="text" id="searchBox" onkeyup="search()" placeholder="Search..." style="margin-bottom: 10px" >
     </div>
     <div class="page">
  
@@ -39,9 +39,7 @@
           <span class="close">&times;</span>
           <div id="modalText"></div>
         </div>
-      
       </div>
-      
     <script src="assets/js/script.js"></script>
 </body>
 

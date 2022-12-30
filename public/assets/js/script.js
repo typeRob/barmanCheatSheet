@@ -5,13 +5,29 @@ var modal = document.getElementById("myModal")
 var modalText = document.getElementById("modalText")
 var free = document.getElementById("analcoholic")
 var span = document.getElementsByClassName("close")[0];
+var langSelect=document.getElementById('langSelect')
 const prep = []
 
-function changeLang(lang) {
-    localStorage.setItem('language', lang)
-    cleanResults()
-    search()
+
+
+
+function setLang(){
+    //Effettuo un controllo per vedere se nel Localstorage vi è già salvata una impostazione di linguaggio,
+    // in modo che se la pagina venisse ricaricata resta salvata l'impostazione, altrimenti verrà impostato il linguaggio rilevato dal OS.
+    var key=localStorage.getItem('language')
+    if(!key){
+        var navlang=navigator.language
+        var defaultLang=navlang.split(/[ -]+/)
+        localStorage.setItem('language', defaultLang[0])
+    }
+    //Event listener che controlla se il select viene aggiornato, cambiando l'impostazione del OS
+    langSelect.addEventListener('change', (event)=>{
+        localStorage.setItem('language', langSelect.value)
+        cleanResults()
+        search()
+    })
 }
+
 function cleanResults(res) {
     section.innerHTML = ""
     clearStorage()
@@ -74,22 +90,30 @@ function search() {
             //print a card for each result
             if (json.drinks) {
                 cleanResults()
-                var index = 1
                 json.drinks.forEach(drink => {
-                    if (localStorage.getItem('language') == 'IT') {
-                        if (drink.strInstructionsIT != null)
+                    if (localStorage.getItem('language') == 'it') {
+                        if (drink.strInstructionsIT != null){
                             var instructions = drink.strInstructionsIT
-                        else
+                            var btnText="Scopri di più"
+                        }
+                        else{
                             var instructions = drink.strInstructions
+                            var btnText="Discover more"
+                        }
                     }
-                    else if (localStorage.getItem('language') == 'DE') {
-                        if (drink.strInstructionsDE != null)
+                    else if (localStorage.getItem('language') == 'de') {
+                        if (drink.strInstructionsDE != null){
                             var instructions = drink.strInstructionsDE
-                        else
+                            var btnText="Finde mehr heraus"
+                        }
+                        else{
                             var instructions = drink.strInstructions
+                            var btnText="Discover more"
+                        }
                     }
-                    else if (localStorage.getItem('language') == 'EN') {
+                    else if (localStorage.getItem('language') == 'en') {
                         var instructions = drink.strInstructions
+                        var btnText="Discover more"
                     }
                     else {
                         var instructions = "no instructions available in this language"
@@ -107,19 +131,22 @@ function search() {
                         }
                     }
                     results =
-                        '<div id="cocktail" class="card">' +
-                        '<img src="' + drink.strDrinkThumb + '" style="width:100%"' +
-                        '<div class="card-cocktail-body">' +
-                        '<h3 class="card-cocktail-title" id="name">' + drink.strDrink + '</h3>' +
-                        '<p class="card-cocktail-text" id="isAlcoholic">' + drink.strAlcoholic + '</p>' +
-                        '<p><button onclick=showInstructions(' + drink.idDrink + ')>Scopri di più</button></p>'
-                    '</div>' +
+                        '<div id="cocktail" class="col-3 col-s-6">'+
+                            '<div class="card">' +
+                                '<div class="card-cocktail-image">' +
+                                    '<img src="' + drink.strDrinkThumb + '" style="width:100%">' +
+                                '</div>' +
+                                '<div class="card-cocktail-body">' +
+                                    '<h3 class="card-cocktail-title" id="name">' + drink.strDrink + '</h3>' +
+                                    '<p class="card-cocktail-text" id="isAlcoholic">' + drink.strAlcoholic + '</p>' +
+                                    '<p><button onclick=showInstructions(' + drink.idDrink + ')>'+btnText+'</button></p>'+
+                                '</div>' +
+                            '</div>' +
                         '</div>'
                     // STAMPO LA CARTA CON IL DRINK
                     section.innerHTML += results
                     // SETTO NEL LOCALSTORAGE UN ARRAY CON ISTRUZIONI E QUANTITÀ PER PREPARAZIONE
                     localStorage.setItem(drink.idDrink, JSON.stringify(prep))
-                    index++
                     //svuoto l'array preparandolo per il prossimo drink
                     while (prep.length > 0) {
                         prep.pop()
