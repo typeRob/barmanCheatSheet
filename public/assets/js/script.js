@@ -1,4 +1,5 @@
 const section = document.getElementById(`cards`)
+var h2=document.getElementById('randomH2')
 if(localStorage.getItem('language')==null)
     localStorage.setItem('language', 'EN')
 var modal = document.getElementById("myModal")
@@ -58,6 +59,7 @@ function search() {
         //se ha 1 char -> ?f=
         if (e.value.length == 1) {
             cleanResults()
+            h2.textContent=""
             var strpayload = "search.php?f=" + e.value
         }
         //se ha 2 o più char -> ?s=
@@ -65,12 +67,12 @@ function search() {
         //se ne ha più di uno
         else if (e.value.length > 1) {
             cleanResults()
+            h2.textContent=""
             var strpayload = "search.php?s=" + e.value
         }
         //se la barra di ricerca è vuota(quindi anche al caricamento della pagina) stampo a video un cocktail random
         else {
             cleanResults()
-            var h2=document.getElementById('randomH2')
             if(localStorage.getItem('language')=='it')
                 h2.textContent="Cocktail consigliato:"
             else if(localStorage.getItem('language')=='de')
@@ -85,6 +87,7 @@ function search() {
         if (e.value.length > 0) {
             //se l'api non riceve input torna un ingrediente di default
             cleanResults()
+            h2.textContent=""
             var strpayload = "search.php?i=" + e.value
         }
         else {
